@@ -32,7 +32,6 @@ class Cabs:
                                                   max_results=10,
                                                   max_distance=5000)
 
-        logging.debug(avail_cabs)
         for cab in avail_cabs:
             cab_det = {}
             cab_det['cabid'] = cab.Cabid
@@ -50,7 +49,6 @@ class Cabs:
         """
         cabkey = db.Key.from_path('CabsInfo', cabid)
         cabdetails = db.get(cabkey)
-        logging.debug(cabdetails)
         cab_info = {}
         cab_info['cabid'] = cabdetails.Cabid
         cab_info['available'] = cabdetails.Available
