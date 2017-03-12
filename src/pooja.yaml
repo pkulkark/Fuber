@@ -1,0 +1,25 @@
+application: adingvaluetest
+module: default
+version: basic
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+
+- url: /cabs/.*
+  script: cabs.app
+
+- url: /requests/.*
+  script: request.app
+
+- url: /initcabs/
+  script: load_cabs.app
+
+libraries:
+- name: webapp2
+  version: "2.5.2"
+- name: pycrypto
+  version: "latest"
+- name: ssl
+  version: "2.7"
