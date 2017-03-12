@@ -20,9 +20,9 @@ class ListAvailableCabs(webapp2.RequestHandler):
             loc_data = self.request.GET
             lat = loc_data.get('latitude')
             longi = loc_data.get('longitude')
-            logging.debug(lat, longi)
             loc = db.GeoPt(lat, longi)
             loc_list = Cabs.getcabs(loc)
+            logging.info(loc_list)
             resp['status'] = "Success"
             resp['data'] = loc_list
             self.response.write(json.dumps(resp))
@@ -44,8 +44,8 @@ class CabHandler(webapp2.RequestHandler):
             data=''
         )
         try:
-            logging.debug(cabid)
             cab_info = Cabs.getcabdetails(cabid)
+            logging.info(cab_info)
             resp['status'] = "Success"
             resp['data'] = cab_info
             self.response.write(json.dumps(resp))
