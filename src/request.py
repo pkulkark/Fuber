@@ -18,6 +18,7 @@ class RequestHandler(webapp2.RequestHandler):
         )
         try:
             reqstat = Requests.getrequestinfo(req_id)
+            logging.info(reqstat)
             resp['status'] = "Success"
             resp['data'] = reqstat
             self.response.write(json.dumps(resp))
@@ -50,19 +51,19 @@ class RequestHandler(webapp2.RequestHandler):
                     cab_lon = each_cab_det['longitude']
                     distance = gpxpy.geo.haversine_distance(lat, longi, cab_lat, cab_lon)
                     distance_dict[distance] = each_cab_det['cabid']
-                logging.debug(distance_dict)
                 min_distance = min(distance_dict.keys())
                 cabid = distance_dict[min_distance]
                 cab_details = Cabs.getcabdetails(cabid)
                 ret_dict['latitude'] = cab_details['latitude']
                 ret_dict['longitude'] = cab_details['longitude']
                 ret_dict['cabid'] = cab_details['cabid']
-                logging.debug(cab_details)
+                logging.info(cab_details)
                # assign cab to user
                 Cabs.assigncab(cabid)
                # generate request id
                 new_reqid = Requests.createnewrequest()
                 ret_dict['req_id'] = new_reqid
+                logging.info(new_reqid)
                 resp['status'] = "Success"
                 resp['data'] = ret_dict
                 self.response.write(json.dumps(resp))
